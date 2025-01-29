@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { DashboardRoute, StudentDetailsRoute, AddNewAchievementRoute, RemoveStudentAchivementRoute } from "../controllers/dashboardController";
+import { verifyToken, verifyPermission } from "../middlewares/auth.middlewares";
+const router = Router();
+router.route("/").get(verifyToken,DashboardRoute);
+router.route("/student/:id").get(verifyToken,verifyPermission("SCHOOL"),StudentDetailsRoute);
+router.route("/add-achievement/:id").post(verifyToken,verifyPermission("SCHOOL"),AddNewAchievementRoute);
+router.route('/deleteachievement/:id').delete(verifyToken,verifyPermission("SCHOOL"),RemoveStudentAchivementRoute);
+router.route('/deleteuser/:id').delete(verifyToken,verifyPermission("SCHOOL"),deleteUser);
+export default router;

@@ -1,3 +1,10 @@
 node_modules
+dist
+coverage
+logs.log
 # Keep environment variables out of version control
 .env
+# Ignore the Prisma schema file that is used to deploy the database
+prisma/schema.prisma
+
+
