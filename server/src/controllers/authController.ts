@@ -65,9 +65,10 @@ const EmailVarificationRoute = async (req: Request, res: Response):Promise<any> 
             if(!user){
                 return res.status(404).json({message:"User Not Found"});
             }
-            // if(user.otp!==otp){
-            //     return res.status(400).json({message:"Invalid OTP"});
-            // }
+        
+            if(user.otp!==otp){
+                return res.status(400).json({message:"Invalid OTP"});
+            }
             if(user.isVerified){
                 return res.status(400).json({message:"Email Already Varified"});
             }
