@@ -137,10 +137,12 @@ const RemoveStudentAchivementRoute= async (req: Request, res: Response):Promise<
         if (!student) {
             return res.status(404).json({message:"Student Not Found"});
         }
-        const studentData=await prisma.studentAchievement.findMany({where:{id: Number(student.id)}});
-        console.log(studentData)
-        if(!studentData){
-            return res.status(404).json({message:"Student Not Found"});
+        if(student.role!=="STUDENT"){
+            return res.status(400).json({message:"This is not a Student Id "});
+        }
+        const achievement=await prisma.studentAchievement.findFirst({where:{id:Number(achievementId)}});
+        if(!achievement){
+            return res.status(404).json({message:"Achievement Not Found"});
         }
         await prisma.studentAchievement.delete({where:{id:Number(achievementId)}});
         return res.status(200).json({message:"Achievement Removed Successfully"});

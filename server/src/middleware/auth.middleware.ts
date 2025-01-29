@@ -10,7 +10,7 @@ declare global {
     }
   }
 }
-export const JwtVerify=async(req:Request,res:Response,next:NextFunction)=>{
+export const JwtVerify=async(req:Request,res:Response,next:NextFunction):Promise<any>=>{
     const token=req.cookies.accessToken || req.header("Authorization")?.replace("Bearer ","");
     if(!token){
         return res.status(401).json({message:"Unauthorized"});
@@ -32,7 +32,7 @@ export const JwtVerify=async(req:Request,res:Response,next:NextFunction)=>{
         
     }
 }
-export const getLoggedInUser=async(req:Request,res:Response,next:NextFunction)=>{
+export const getLoggedInUser=async(req:Request,res:Response,next:NextFunction):Promise<any>=>{
     const token=req.cookies.accessToken || req.header("Authorization")?.replace("Bearer ","");
     try {
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as jwt.JwtPayload;
@@ -48,8 +48,8 @@ export const getLoggedInUser=async(req:Request,res:Response,next:NextFunction)=>
     }
 }
 
-export const verifyRole=(role:string)=>{
-    return async(req:Request,res:Response,next:NextFunction)=>{
+export const verifyPermission=(role:string)=>{
+    return async(req:Request,res:Response,next:NextFunction):Promise<any>=>{
         if(!req.user?.email){
             return res.status(401).json({message:"Unauthorized"});
         }

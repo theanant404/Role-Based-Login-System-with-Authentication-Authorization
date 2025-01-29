@@ -27,8 +27,13 @@ app.use(express.json({limit:'10kb'}));
 app.use(express.urlencoded({extended:true,limit:'10kb'}));
 app.use(express.static('public'));
 app.use(cookieParser());
-app.get('/',(req:Request,res:Response)=>{
-    res.send('Hello World');
-});
+
+import dashboardRoutes from './routes/dashboardRoutes';
+import authRoutes from './routes/authRoutes';
+import { JwtVerify } from './middleware/auth.middleware';
+
+app.use("/auth/",authRoutes);
+app.use(JwtVerify);
+app.use("/dashboard/",dashboardRoutes);
 
 export default app;

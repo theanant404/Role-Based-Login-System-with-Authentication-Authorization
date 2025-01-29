@@ -29,7 +29,10 @@ app.use(express_1.default.json({ limit: '10kb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express_1.default.static('public'));
 app.use((0, cookie_parser_1.default)());
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+const dashboardRoutes_1 = __importDefault(require("./routes/dashboardRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const auth_middleware_1 = require("./middleware/auth.middleware");
+app.use("/auth/", authRoutes_1.default);
+app.use(auth_middleware_1.JwtVerify);
+app.use("/dashboard/", dashboardRoutes_1.default);
 exports.default = app;
